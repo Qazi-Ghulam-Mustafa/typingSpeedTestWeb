@@ -4,27 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GM Typing Speed Nova</title>
+    <title>Speed Typing Test</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-
-    <h1 id="h1">Typing Speed Nova</h1>
-    <div class="stopWatch">
-        <h1>Timer</h1>
-        <p class="time" id="timer">
-            <span id="minutes">00 :</span><span id="seconds"> 00 :</span><span id="tens"> 00</span>
-        </p>
-        <input type="text" id="input">
-        <b id="wordCount"></b>
-        <b id="alphabetCount"></b>
-        <button id="startButton">Start</button>
-        <button id="stopButton">Stop</button>
-        <button id="resetButton">Reset</button>
+    <div id="container" >
+        <h1>Typing Speed Nova</h1>
+        <p id="text-to-type">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus ullam laborum mollitia
+            hic deleniti earum cum ut voluptates, possimus sunt quam unde eaque illum, nulla ab placeat aliquid,
+            nesciunt voluptatum.</p>
+        <textarea name="input" id="userInput" placeholder="Start typing here..."></textarea>
+        <button id="submit">Submit</button>
+        <div id="result">
+            <h2>your results</h2>
+            <p id="accuracy">
+                Accuracy:0%
+            </p>
+            <p id="wpm">
+                word per minute: 0
+            </p>
+        </div>
     </div>
-
-
 
     <script src="script.js"></script>
 </body>

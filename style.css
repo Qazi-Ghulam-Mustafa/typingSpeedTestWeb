@@ -1,4 +1,4 @@
-body {
+/* body {
     background: #3c8496;
     color: #fff;
     font-family: 'Arial', sans-serif;
@@ -54,4 +54,26 @@ b{
     display: block;
     margin-top: 20px;
     font-size: 1.5em;
+} */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body{
+    background: #1e5aca;
+    color: #fff9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+#container{
+    background: rgba(255, 255, 255, 0.6);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 400px;
 }
