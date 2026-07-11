@@ -1,123 +1,125 @@
-// var minutes = document.getElementById("minutes");
-// var seconds = document.getElementById("seconds");
-// var tens = document.getElementById("tens");
-// var wordCount = document.getElementById("wordCount");
-// var alphabetCount = document.getElementById("alphabetCount");
-// var input = document.getElementById("input");
-// var resetButton = document.getElementById("resetButton");
-// var timer = document.getElementById("timer");
-// var startButton = document.getElementById("startButton");
-// var stopButton = document.getElementById("stopButton");
+const quotes = [
+    "Practice makes perfect.",
+    "Success comes to those who never quit.",
+    "Learning JavaScript requires patience and consistent practice.",
+    "Frontend development combines creativity with logical problem solving.",
+    "Every experienced programmer was once a beginner who refused to give up.",
+    "Clean and readable code is more valuable than clever but confusing solutions.",
+    "The best developers constantly improve their skills by building real world projects.",
+    "Programming is the art of transforming complex problems into elegant and maintainable solutions.",
+    "Successful software engineers embrace debugging because every error teaches a valuable lesson about their code.",
+    "Mastering web development requires persistence, continuous learning, attention to detail, and the determination to solve challenging problems every single day."
+];
 
-// window.onload = function () {
-//     minutes = 0;
-//     seconds = 0;
-//     tens = 0;
-//     wordCount = 0;
-//     alphabetCount = 0;
-//     input.addEventListener("input", () =>{
+const givenText = document.getElementById("text-to-type");
+const userInput = document.getElementById("userInput");
+const accuracyDisplay = document.getElementById("accuracy");
+const WpmDisplay = document.getElementById("wpm");
+const mistakeDisplay = document.getElementById("mistake");
+const progress = document.getElementById("progress");
+const successMessage = document.getElementById("successMessage");
+const CompletionMessage = document.getElementById("CompletionMessage");
+const restartBtn = document.getElementById("restartBtn")
 
-//     });
-// }
-
-// var Interval;
-
-// const startTimer = () => {
-//     tens++;
-//     if (tens <= 9) {
-//         tens.innerHTML = "0" + tens;
-//     }
-//     if (tens > 9 && tens < 100) {
-//         tens.innerHTML = tens;
-//     }
-//     if (tens > 99) {
-//         seconds++;
-//         seconds.innerHTML = "0" + seconds;
-//         tens = 0;
-//         tens.innerHTML = "0" + tens;
-//     }
-//     if (seconds > 59) {
-//         minutes++;
-//         minutes.innerHTML = "0" + minutes;
-//         seconds = 0;
-//         seconds.innerHTML = "0" + seconds   ;
-//     }
-// }
-
-// startButton.addEventListener("click", () => {
-//     console.log("start");
-//     clearInterval(Interval);
-//     Interval = setInterval(startTimer, 10);
-// });
-// stopButton.addEventListener("click", () => {
-//     clearInterval(Interval);
-// });
-// resetButton.addEventListener("click", () => {
-//     clearInterval(Interval);
-//     minutes = 0;
-//     seconds = 0;
-//     tens = 0;
-//     minutes.innerHTML = "0" + minutes;
-//     seconds.innerHTML = "0" + seconds;
-//     tens.innerHTML = "0" + tens;
-// });
-
-
-// let givenText = document.getElementById("text-to-type");
-// let userInput = document.getElementById("userInput");
-// let StartBtn = document.getElementById("Start");
-// let accuracy = document.getElementById("accuracy");
-// let wpm = document.getElementById("wpm");
-
-
-// userInput.addEventListener("input", () => {
-//     let startTime = Date.now();
-//     let userText = userInput.value;
-//     let correctChar = 0;
-//     for (let i = 0; i < userText.length; i++) {
-//         if (userInput[i] === givenText[i]) {
-//             correctChar++;
-//         }
-//     }
-// });
-// accuracy = (correctChar / givenText.length) * 100;
-// accuracy.innerText = `Accuracy :${accuracy.toFixed(2)}%`;
-// let words = (userInput.value.split(" ").length - 1) / ((Date.now() - startTime) / 60000).toFixed(2);
-// wpm.innerText = `Word per minute : ${words.toFixed(2)}`;
-
-let givenText = document.getElementById("text-to-type");
-let userInput = document.getElementById("userInput");
-let accuracyDisplay = document.getElementById("accuracy");
-let wpmDisplay = document.getElementById("wpm");
-
+let currentQuote = 0;
 let startTime = null;
+
+loadQuote();
+
+function loadQuote() {
+    givenText.innerText = quotes[currentQuote];
+    progress.innerText = `Quote ${currentQuote + 1} / ${quotes.length}`;
+
+    userInput.value = "";
+    userInput.focus();
+
+    startTime = null;
+    successMessage.innerText = "";
+    CompletionMessage.innerText = "";
+}
 
 userInput.addEventListener("input", () => {
 
-    // Start timer only once
     if (!startTime) {
         startTime = Date.now();
     }
 
-    let userText = userInput.value;
-    let originalText = givenText.innerText;
+    const userText = userInput.value;
+    const originalText = quotes[currentQuote];
 
     let correctChar = 0;
+    let mistakes = 0;
 
     for (let i = 0; i < userText.length; i++) {
+
         if (userText[i] === originalText[i]) {
             correctChar++;
+        } else {
+            mistakes++;
         }
+
     }
 
     // Accuracy
-    let accuracy = (correctChar / originalText.length) * 100;
+    let accuracy = userText.length === 0
+        ? 0
+        : (correctChar / userText.length) * 100;
+
     accuracyDisplay.innerText = `Accuracy : ${accuracy.toFixed(2)}%`;
 
-    // WPM
-    let timeElapsed = (Date.now() - startTime) / 60000; // minutes
-    let wordsTyped = userText.trim().split(/\s+/).length;
-    let wpm = wordsTyped / timeElapsed;
+    // Mistakes
+    mistakeDisplay.innerText = `Mistakes : ${mistakes}`;
 
-    wpmDisplay.innerText = `Words per minute : ${wpm.toFixed(2)}`;
+    // Time
+    let minutes = (Date.now() - startTime) / 60000;
+
+    // Word Count
+    let words = userText.trim() === ""
+        ? 0
+        : userText.trim().split(/\s+/).length;
+
+    // WPM
+    let wpm = minutes > 0 ? words / minutes : 0;
+
+    WpmDisplay.innerText = `Words Per Minute : ${wpm.toFixed(2)}`;
+
+    // Quote Completed
+    if (userText === originalText) {
+        userInput.disabled = true;
+        currentQuote++;
+
+        if (currentQuote < quotes.length) {
+
+            successMessage.innerText = "✅ Correct! Loading next quote...";
+
+            setTimeout(() => {
+                userInput.disabled = false;
+                loadQuote();
+            }, 800);
+
+        } else {
+
+            CompletionMessage.innerText =
+                "🎉 Congratulations! You completed all 10 quotes.";
+
+            progress.innerText = "Completed ✅";
+            restartBtn.style.display = "block";
+
+            userInput.disabled = true;
+        }
+    }
+
 });
+
+restartBtn.addEventListener("click", () => {
+    currentQuote = 0;
+    startTime = null;
+    userInput.disabled = false;
+    loadQuote();
+    accuracyDisplay.innerText = "Accuracy: 0%";
+    WpmDisplay.innerText = "Words Per Minute: 0";
+    mistakeDisplay.innerText = "Mistakes: 0";
+
+
+    restartBtn.style.display = "none";
+})

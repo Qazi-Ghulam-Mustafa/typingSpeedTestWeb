@@ -4,27 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Speed Typing Test</title>
+    <title>Typing Speed Nova</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div id="container" class="conatainer" >
-        <h1>Typing Speed Nova</h1>
-        <p id="text-to-type">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus ullam laborum mollitia
-            hic deleniti earum cum ut voluptates, possimus sunt quam unde eaque illum, nulla ab placeat aliquid,
-            nesciunt voluptatum.</p>
-        <textarea name="input" id="userInput" placeholder="Start typing here..."></textarea>
-        <div id="result">
-            <h2>Your results</h2>
-            <p id="accuracy">
-                Accuracy  :  
-            </p>
-            <p id="wpm">
-                word per minute     : 
-            </p>
+    <div class="container">
+        <h1>⌨️ Typing Speed Nova</h1>
+
+        <p id="progress">Quote 1 / 10</p>
+
+        <div class="quote-box">
+            <p id="text-to-type"></p>
+        </div>
+
+        <textarea name="" id="userInput" placeholder="Test Your Typing here..." autofocus></textarea>
+        <b id="successMessage"></b>
+        <b id="CompletionMessage"></b>
+        <button id="restartBtn">Restart</button>
+
+        <div class="result">
+            <h2>Your typing Result</h2>
+            <div class="remarks">
+                <p id="accuracy">Accuracy:0%</p>
+                <p id="wpm">Words per Mintues:0</p>
+                <p id="mistake">Mistake:0</p>
+            </div>
         </div>
     </div>
+
 
     <script src="script.js"></script>
 </body>
